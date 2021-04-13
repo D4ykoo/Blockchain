@@ -1,10 +1,13 @@
-package models;
+/*
+ * Code is in style of the book: Blockchain für Entwickler by Tobias Fertig, 2018
+ * It is just a little bit changed for the purposes of demonstrating the blockchain-technology by Dario Köllner, 2021
+ * */
+
+package data_model;
 
 import helpers.SHA3Helper;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Objects;
 
 // The hash is generated with streams, so serializable is needed
 public class Transaction implements Serializable {
@@ -39,6 +42,9 @@ public class Transaction implements Serializable {
         this.txId = txId;
     }
 
+    public byte[] getTxId(){
+        return this.txId;
+    }
     public byte[] getSender() {
         return sender;
     }

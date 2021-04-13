@@ -1,6 +1,15 @@
-package models;
+/*
+ * Code is in style of the book: Blockchain für Entwickler by Tobias Fertig, 2018
+ * It is just a little bit changed for the purposes of demonstrating the blockchain-technology by Dario Köllner, 2021
+ * */
 
-public class BlockHeader {
+package data_model;
+
+import helpers.SHA3Helper;
+
+import java.io.Serializable;
+
+public class BlockHeader implements Serializable {
 
     // Blockheader -> 80 Byte
     private int version; // 4 Byte
@@ -9,11 +18,19 @@ public class BlockHeader {
     private byte[] transactionList; // 32 Byte
     private int nonce = 0; // 4 Byte
 
-    public BlockHeader(int version, long timeStamp, byte[] previousHash, byte[] transactionList) {
-        this.version = version;
+    public BlockHeader(){
+
+    }
+
+    public BlockHeader(long timeStamp, byte[] previousHash, byte[] transactionList) {
+        this.version = 1;
         this.timeStamp = timeStamp;
         this.previousHash = previousHash;
         this.transactionList = transactionList;
+    }
+
+    public byte[] asHash() {
+        return SHA3Helper.hash256(this);
     }
 
     public int getVersion() {
@@ -57,7 +74,7 @@ public class BlockHeader {
     }
 
     public void incrementNonce() throws Exception {
-        if(this.nonce == Integer.MAX_VALUE){
+        if (this.nonce == Integer.MAX_VALUE) {
             throw new Exception("Maximum of nonce reached");
         }
         this.nonce++;
